@@ -1,5 +1,6 @@
 const gameOptions = ["rock", "paper", "scissors"];
-let compScore, playerScore = 0;
+let playerScore = 0;
+let compScore = 0;
 
 function getComputerChoice(){
     let computerChoice = Math.floor(Math.random()*gameOptions.length);
@@ -8,6 +9,7 @@ function getComputerChoice(){
 
 function playRound(playerSelection, computerSelection){
     let result;
+    let winner;
 
     console.log(`Player Choice: ${playerSelection}`);
     console.log(`Computer Choice: ${computerSelection}`);
@@ -45,7 +47,44 @@ function playRound(playerSelection, computerSelection){
                 break;
         }
     }
-    return result;
+    console.log(result);
+    if (result.charAt(4) === "l"){
+        winner = "Computer";
+    }
+    else if (result.charAt(4) === "w"){
+        winner = "Player";
+    }
+    else {winner = "Tie";}
+    return winner;
 }
 
-console.log(playRound(prompt("Enter your choice"), getComputerChoice()));
+//console.log(playRound(prompt("Enter your choice"), getComputerChoice()));
+
+function playGame(){
+    for (i = 0; i < 5; i++){
+        let roundWinner = playRound(prompt("Enter your choice"), getComputerChoice());
+        if(roundWinner == "Computer"){
+            compScore++;
+        }
+        else if (roundWinner == "Player") {
+            playerScore++;
+        }
+
+        console.log(`Score\nPlayer: ${playerScore}\nComputer: ${compScore}`);
+    }
+}
+
+function checkWinner(compScore, playerScore){
+    if (compScore > playerScore){
+        return "Final Winner: Computer";
+    }
+    else if(compScore < playerScore){
+        return "Final Winner: You!";
+    }
+    else{
+        return "Final Result: It's a tie";
+    }
+}
+
+playGame();
+console.log(checkWinner(compScore, playerScore));
